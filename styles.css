@@ -1,0 +1,34 @@
+body{
+    margin: o;
+    padding: 0;
+
+}
+header{
+    text-align: center;
+    background: url(./images/pattern-bg-desktop.png);
+    padding: 2rem;
+    color: #fff;
+}
+.header-content{
+    max-width: 600px;
+    margin: 0 auto;
+}
+header input{
+    width: 300px;
+    height: 30px;
+    border-radius: 10px;
+    padding-left: 10px;
+    border: none;
+}
+header button{
+    height: 30px;
+    width: 50px;
+    border-radius: 10px;
+    background-color: black;
+    color: #fff;
+    font-weight: 900;
+    border: none;
+}
+#map{
+    height: 400px;
+}
