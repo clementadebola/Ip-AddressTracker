@@ -1,65 +1,47 @@
-const geoipifyApiKey = "at_2sl8Au2CfNGCIVuD93dY5SkgrRC4L";
+const ipInfoToken = "7b9aac4c123c80";
 
-function trackIP() {
+async function getInput() {
   const ipInput = document.getElementById("inInput").value;
 
-   // Check if the input is empty
-   if (!ipInput) {
-    alert('Please enter an IP address.');
+  // Check if the input is empty
+  if (!ipInput) {
+    alert("Please enter an IP address.");
     return;
+  }
+  await renderMap(ipInput);
 }
 
-  //use the geo api
-  fetch(
-    `https://geo.ipify.org/api/v2/country?apiKey=at_2sl8Au2CfNGCIVuD93dY5SkgrRC4L&ipAddress=8.8.8.8`
-  )
-    .then((response) => response.json())
-    .then((data) => {
-      // extract lat and long from d api ref
-      const { latitude, longitude } = data.location;
-
-      //updata the map
-      updateMap(latitude, longitude);
-    })
-    .catch((error) => {
-      console.error("error fetching IP data:", error);
-    });
-}
-
-
+const getLocation = async (ip) => {
+  try {
+    const response = await fetch(`https://ipinfo.io/${ip}?token=${ipInfoToken}`);
+    const data = await response.json();
+    if(!data.loc && data.error){
+      alert(data.error.message)
+    }
+    const [lat, long] = data?.loc.split(",");
+    return { latitude: lat, longitude: long };
+  } catch (err) {
+    console.error(err);
+  }
+};
 
 // Function to update the map with the new location
-function updateMap(latitude, longitude) {
-  if (!map) {
-    // Initialize the map if it hasn't been initialized yet
-     map = L.map("map").setView([51.505, -0.09], 13);
+function updateMap({ latitude, longitude }) {
+  var map = L.map("map").setView([latitude, longitude], 13);
 
-    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      maxZoom: 19,
-      attribution:
-        '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-    }).addTo(map);
-      // Add a marker at the tracked location
-      L.marker([latitude, longitude]).addTo(map);
+  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 19,
+    attribution:
+      '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+  }).addTo(map);
 
-  } else{ map.setView([latitude, longitude], 12);
-
-    // Remove previous markers
-    map.eachLayer(layer => {
-        if (layer instanceof L.Marker) {
-            layer.remove();
-        }
-    });
-
-    // Add a marker at the new tracked location
-    L.marker([latitude, longitude]).addTo(map);
+  L.marker([latitude, longitude]).addTo(map)
+  .bindPopup('current user location')
+  .openPopup();
   }
-}
 
-// var map = L.map("map").setView([51.505, -0.09], 13);
+const renderMap = async (ipAddress) => {
+  const location = await getLocation(ipAddress);
+  updateMap(location); 
+};
 
-// L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-//   maxZoom: 19,
-//   attribution:
-//     '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-// }).addTo(map);
