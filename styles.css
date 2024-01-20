@@ -32,3 +32,16 @@ header button{
 #map{
     height: 400px;
 }
+footer{
+    text-align: center;
+    margin-top: auto;
+    color: #fff;
+    font-size: 15px;
+    bottom: 0;
+    background: url(./images/pattern-bg-desktop.png);
+    padding: 0.8rem;
+}
+a{
+  text-decoration: none;
+  color: aqua;
+}
