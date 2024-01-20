@@ -6,18 +6,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ip Address Tracker</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="shortcut icon" href="./images/logo.png" type="image/x-icon">
+
+    <!-- map links -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
 </head>
 
 <body>
     <header>
         <div class="header-content">
             <h1>IP Address Tracker</h1>
-            <input type="text" placeholder="Search for any ip address or domain">
-            <button type="submit">></button>
+            <input type="text" placeholder="Search for any ip address or domain" id="inInput">
+            <button onclick="trackIP()" type="submit">></button>
         </div>
     </header>
     <div id="map"></div>
-
+<script src="script.js"></script>
 </body>
 
 </html>
