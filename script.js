@@ -16,10 +16,14 @@ const locationDetails = document.getElementById('locationDetails');
     alert("Please enter an IP address.");
     return;
   }
+    // Show the loader before making the request
+    showLoader();
+
   await renderMap(ipInput);
 }
 
 const getLocation = async (ip) => {
+
   try {
     const response = await fetch(`https://ipinfo.io/${ip}?token=${ipInfoToken}`);
     const data = await response.json();
@@ -29,26 +33,26 @@ const getLocation = async (ip) => {
     const [lat, long] = data?.loc.split(",");
     return { latitude: lat, longitude: long };
 
-    locationCard.innerHTML = `
-    <div class="cardContent" id="locationDetails">
-    <p>IP ADDRESS</p>
-    <h2 > ${data.ip}</h2>
-    </div>
-    <div class="cardContent">
-    <p>Location:</p>
-    <h2 >${data.location}</h2>
-    </div>
-    <div class="cardContent">
-    <p>ISP</p>
-    <p >${data.isp}</p>
-    </div>
+    // locationCard.innerHTML = `
+    // <div class="cardContent" id="locationDetails">
+    // <p>IP ADDRESS</p>
+    // <h2 > ${data.ip}</h2>
+    // </div>
+    // <div class="cardContent">
+    // <p>Location:</p>
+    // <h2 >${data.location}</h2>
+    // </div>
+    // <div class="cardContent">
+    // <p>ISP</p>
+    // <p >${data.isp}</p>
+    // </div>
     
-    `;
+    // `;
 
     //Update card context with location info
-    // ipAddressSpan.textContent = data.ip || 'N/A';
-    // locationSpan.textContent = data.location ? `${data.location.city}, ${data.location.region}, ${data.location.country} `: 'N/A';
-    // ispSpan.textContent = data.isp || 'N/A';
+    ipAddressSpan.textContent = data.ip || 'N/A';
+    locationSpan.textContent = data.location ? `${data.location.city}, ${data.location.region}, ${data.location.country} `: 'N/A';
+    ispSpan.textContent = data.isp || 'N/A';
 
     //display the card
     locationCard.style.display = 'block';
@@ -56,8 +60,26 @@ const getLocation = async (ip) => {
     //update title
   } catch (err) {
     console.error(err);
-  }
+  }  finally {
+    // Hide the loader after the request is complete
+    hideLoader();
+}
 };
+// Function to show the loader
+function showLoader() {
+  document.getElementById('loader').style.display = 'block';
+}
+
+// Function to hide the loader
+function hideLoader() {
+  document.getElementById('loader').style.display = 'none';
+}
+
+// Example usage:
+showLoader(); // Call this before starting the IP address tracking operation
+// ... Your IP address tracking logic ...
+hideLoader(); // Call this when the operation is complete
+
 
 // Function to update the map with the new location
 function updateMap({ latitude, longitude }) {
