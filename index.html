@@ -19,14 +19,35 @@
 </head>
 
 <body>
-    <header>
         <div class="header-content">
             <h1>IP Address Tracker</h1>
-            <input type="text" placeholder="Search for any ip address or domain" id="inInput">
-            <button onclick={getInput()} type="submit">></button>
+            <div class="searchBar">
+                <input type="text" placeholder="Search for any ip address or domain" id="inInput" class="search">
+                <button class="arrowBtn" onclick={getInput()} type="submit">>
+                    <Icon />
+                </button>
+            </div>
         </div>
-    </header>
+
     <div id="map"></div>
+    <div class="displayCard" id="locationCard">
+        <div class="cardContent" id="locationDetails">
+            <p>IP ADDRESS</p>
+            <h2 id="ipAddress"></h2>
+        </div>
+        <div class="cardContent">
+            <p>Location:</p>
+            <h2 id="location"></h2>
+        </div>
+        <div class="cardContent">
+            <p>TIMEZONE</p>
+            <h2></h2>
+        </div>
+        <div class="cardContent">
+            <p>ISP</p>
+            <p id="isp"></p>
+        </div>
+    </div>
     <footer>
         <p>&copy; 2024 IP Address Tracker Project by <a href="https://ziongate.netlify.app/">Ziongate</a></p>
     </footer>

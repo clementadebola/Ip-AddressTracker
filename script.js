@@ -1,7 +1,15 @@
 const ipInfoToken = "7b9aac4c123c80";
 
+
 async function getInput() {
-  const ipInput = document.getElementById("inInput").value;
+  const ipInput = document.getElementById("inInput").value
+  //
+  const locationCard = document.getElementById('locationCard');
+  const ipAddressSpan = document.getElementById('ipAddress');
+const locationSpan = document.getElementById('location');
+const ispSpan = document.getElementById('isp');
+const locationDetails = document.getElementById('locationDetails');
+//
 
   // Check if the input is empty
   if (!ipInput) {
@@ -20,6 +28,32 @@ const getLocation = async (ip) => {
     }
     const [lat, long] = data?.loc.split(",");
     return { latitude: lat, longitude: long };
+
+    locationCard.innerHTML = `
+    <div class="cardContent" id="locationDetails">
+    <p>IP ADDRESS</p>
+    <h2 > ${data.ip}</h2>
+    </div>
+    <div class="cardContent">
+    <p>Location:</p>
+    <h2 >${data.location}</h2>
+    </div>
+    <div class="cardContent">
+    <p>ISP</p>
+    <p >${data.isp}</p>
+    </div>
+    
+    `;
+
+    //Update card context with location info
+    // ipAddressSpan.textContent = data.ip || 'N/A';
+    // locationSpan.textContent = data.location ? `${data.location.city}, ${data.location.region}, ${data.location.country} `: 'N/A';
+    // ispSpan.textContent = data.isp || 'N/A';
+
+    //display the card
+    locationCard.style.display = 'block';
+
+    //update title
   } catch (err) {
     console.error(err);
   }
@@ -45,3 +79,4 @@ const renderMap = async (ipAddress) => {
   updateMap(location); 
 };
 
+// card display ip address info
